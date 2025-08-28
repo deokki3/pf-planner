@@ -1,0 +1,7 @@
+# 텍스트 파일은 자동 변환
+* text=auto
+
+# svg, png, jpg 등 바이너리 파일은 변환 금지
+*.svg text eol=lf
+*.png binary
+*.jpg binary
