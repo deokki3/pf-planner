@@ -7,6 +7,8 @@ node_modules/
 dist/
 build/
 # logs
+/logs
+apps/server/logs/
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*

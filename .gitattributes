@@ -5,3 +5,4 @@
 *.svg text eol=lf
 *.png binary
 *.jpg binary
+*.json text eol=lf
