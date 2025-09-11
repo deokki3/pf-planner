@@ -69,14 +69,14 @@ const enumerateDays = (fromISO: string, toISO: string): string[] => {
 };
  
 const loadSummary = async () => {
-  const r = await api.get('/api/expenses/summary', { params: { from, to } });
+  const r = await api.get('/expenses/summary', { params: { from, to } });
   setCat(r.data?.byCategory ?? []);
   setDaily(r.data?.byDay ?? []);
 };
 
 const loadStacked = async () => {
   // fetch only the selected period
-  const r = await api.get('/api/expenses', { params: { from, to } });
+  const r = await api.get('/expenses', { params: { from, to } });
   const expenses: Array<{ date: string; category: string; amount: number }> = r.data ?? [];
 
   // collect categories + date→category sums
@@ -117,7 +117,7 @@ useEffect(() => {
   })();
 }, [from, to]);
 const addExpense = async () => {
-  await api.post('/api/expenses', { date, category, amount, memo });
+  await api.post('/expenses', { date, category, amount, memo });
   setMemo('');
   await Promise.all([loadSummary(), loadStacked()]);
 };

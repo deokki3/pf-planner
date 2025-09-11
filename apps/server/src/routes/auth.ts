@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { User } from '../models/User.js';
 import { Session } from '../models/Session.js';
-import { sessionAuth } from '../middleware/sessionAuth.js';
+import { sessionAuth, sessionAuthOptional  } from '../middleware/sessionAuth.js';
 import type { AuthedRequest } from '../middleware/sessionAuth.js';
 
 const router = Router();
@@ -94,9 +94,12 @@ router.post('/logout', sessionAuth, async (req: AuthedRequest, res) => {
 });
 
 // GET /api/auth/me
-router.get("/me", sessionAuth, (req: AuthedRequest, res) => {
-  if (!req.user) return res.status(401).json({ error: "Not authenticated" });
-  res.json({ user: req.user });
-});
 
+router.get('/me', sessionAuthOptional, (req: AuthedRequest, res) => {
+  const u = req.user ?? null;
+  if (!u) return res.json({ user: null });
+  return res.json({
+    user: { id: u.userId, email: u.email, name: u.name },
+  });
+});
 export default router;
